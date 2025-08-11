@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Text, DateTime, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, validator
 from datetime import datetime
 import os
 from dotenv import load_dotenv
@@ -77,8 +77,7 @@ class PortfolioSectionCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     content: str = Field(..., min_length=1)
     
-    @field_validator('section_name')
-    @classmethod
+    @validator('section_name')
     def validate_section_name(cls, v):
         if not v.replace('_', '').replace('-', '').isalnum():
             raise ValueError('Section name must be alphanumeric with underscores or hyphens only')
@@ -192,7 +191,7 @@ async def get_tech_skills(db: Session = Depends(get_db)):
 
 @app.post("/api/tech-skills")
 async def create_tech_skill(skill: TechSkillCreate, db: Session = Depends(get_db)):
-    db_skill = TechSkill(**skill.model_dump())
+    db_skill = TechSkill(**skill.dict())
     db.add(db_skill)
     db.commit()
     db.refresh(db_skill)
@@ -205,7 +204,7 @@ async def get_projects(db: Session = Depends(get_db)):
 
 @app.post("/api/projects")
 async def create_project(project: ProjectCreate, db: Session = Depends(get_db)):
-    db_project = Project(**project.model_dump())
+    db_project = Project(**project.dict())
     db.add(db_project)
     db.commit()
     db.refresh(db_project)
@@ -218,7 +217,7 @@ async def get_experience(db: Session = Depends(get_db)):
 
 @app.post("/api/experience")
 async def create_experience(exp: ExperienceCreate, db: Session = Depends(get_db)):
-    db_exp = Experience(**exp.model_dump())
+    db_exp = Experience(**exp.dict())
     db.add(db_exp)
     db.commit()
     db.refresh(db_exp)
