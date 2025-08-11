@@ -36,6 +36,8 @@ dist
 .env.development
 .env.production
 .env.test
+# But allow example files
+!.env.example
 *token.json*
 *credentials.json*
 
@@ -95,6 +97,6 @@ frontend/node_modules/.cache/default-development/5.pack
 frontend/node_modules/.cache/default-development/0.pack
 
 # Portfolio specific
-backend/.env*
-frontend/.env*
+backend/.env
+frontend/.env
 *.log
