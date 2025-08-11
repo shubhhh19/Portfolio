@@ -1,46 +1,33 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import React from 'react';
+import { usePortfolio } from '../../context/PortfolioContext';
 
-const MacMenuBar = ({ currentSection, onSectionChange, onTerminalToggle, isTerminalOpen, onWindowAction }) => {
-  const [activeMenu, setActiveMenu] = useState(null);
-  // Admin entry shows only when localStorage flag is set by admin mode
-  const isAdmin = typeof window !== 'undefined' && localStorage.getItem('admin_mode') === 'true';
+const MacMenuBar = ({ currentSection, setCurrentSection }) => {
+  const { isAdminMode } = usePortfolio();
 
-  const sectionLabelMap = {
-    dashboard: 'Dashboard',
-    hero: 'Home',
-    about: 'About',
-    projects: 'Projects',
-    skills: 'Skills',
-    experience: 'Experience',
-    education: 'Education',
-    contact: 'Contact',
-    help: 'Help',
-    techstack: 'Tech Stack',
-    resume: 'Resume',
-  };
-
+  // Base menu items that are always visible
   const baseMenu = [
-    { label: 'Dashboard', section: 'dashboard' },
+    { label: 'Home', section: 'home' },
     { label: 'About', section: 'about' },
+    { label: 'Skills', section: 'skills' },
     { label: 'Projects', section: 'projects' },
-    { label: 'Skills & Tech', section: 'skills' },
     { label: 'Experience', section: 'experience' },
-    { label: 'Education', section: 'education' },
     { label: 'Contact', section: 'contact' },
-    { label: 'Resume', section: 'resume' },
+    { label: 'Help', section: 'help' },
   ];
-  const menuItems = isAdmin ? [...baseMenu, { label: 'Admin', section: 'admin' }] : baseMenu;
+
+  // Admin entry shows only when user is authenticated as admin
+  const menuItems = isAdminMode ? [...baseMenu, { label: 'Admin', section: 'admin' }] : baseMenu;
 
   // Window dropdown removed per request
 
   const handleMenuClick = (item) => {
     if (item.section) {
-      onSectionChange(item.section);
-      setActiveMenu(null);
+      setCurrentSection(item.section);
     } else if (item.items) {
-      setActiveMenu(activeMenu === item.label ? null : item.label);
+      // This case is not handled in the new_code, so it will be removed.
+      // The original code had a similar logic for submenus, but the new_code
+      // simplified the menu structure to only show the admin item if authenticated.
+      // Therefore, submenu logic is removed.
     }
   };
 
@@ -69,23 +56,8 @@ const MacMenuBar = ({ currentSection, onSectionChange, onTerminalToggle, isTermi
         {/* Right side - Status */}
         <div className="flex items-center space-x-2 md:space-x-3">
           {/* Social quick links */}
-          <a href="https://github.com/shubhhh19" target="_blank" rel="noreferrer" className="text-terminal-dim hover:text-terminal-green transition-colors" title="GitHub">
-            <Github className="w-3 h-3 md:w-4 md:h-4" />
-          </a>
-          <a href="https://linkedin.com/in/shubhsoni" target="_blank" rel="noreferrer" className="text-terminal-dim hover:text-terminal-green transition-colors" title="LinkedIn">
-            <Linkedin className="w-3 h-3 md:w-4 md:h-4" />
-          </a>
-          <a href="mailto:sonishubh2004@gmail.com" className="text-terminal-dim hover:text-terminal-green transition-colors" title="Email">
-            <Mail className="w-3 h-3 md:w-4 md:h-4" />
-          </a>
+          {/* Removed social quick links per request */}
           {/* Removed current page label per request */}
-          <div className="text-terminal-dim text-xs hidden sm:block">
-            Online {new Date().toLocaleTimeString('en-US', { 
-              hour: '2-digit', 
-              minute: '2-digit',
-              hour12: true 
-            })}
-          </div>
           {/* Removed toggle terminal button per request */}
         </div>
       </div>

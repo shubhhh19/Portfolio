@@ -242,7 +242,43 @@ const PortfolioProvider = ({ children }) => {
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Admin authentication
   const [isAdminMode, setIsAdminMode] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+
+  // Login as admin
+  const loginAsAdmin = async (password) => {
+    try {
+      // In a real app, you'd verify against backend
+      // For now, we'll use a simple check
+      const adminToken = process.env.REACT_APP_ADMIN_TOKEN || 'portfolio1919';
+      
+      if (password === adminToken) {
+        setIsAdminMode(true);
+        localStorage.setItem('admin_mode', 'true');
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Admin login error:', error);
+      return false;
+    }
+  };
+
+  // Logout from admin
+  const logoutAdmin = () => {
+    setIsAdminMode(false);
+    localStorage.removeItem('admin_mode');
+  };
+
+  // Toggle admin mode (for backward compatibility)
+  const toggleAdminMode = () => {
+    if (isAdminMode) {
+      logoutAdmin();
+    } else {
+      setShowAdminLogin(true);
+    }
+  };
 
   // Fetch all portfolio data
   const fetchPortfolioData = async () => {
@@ -385,16 +421,6 @@ const PortfolioProvider = ({ children }) => {
     }
   };
 
-  // Toggle admin mode
-  const toggleAdminMode = () => {
-    setIsAdminMode(!isAdminMode);
-    try {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('admin_mode', String(!isAdminMode));
-      }
-    } catch {}
-  };
-
   // Get terminal commands
   const getTerminalCommands = async () => {
     try {
@@ -419,6 +445,7 @@ const PortfolioProvider = ({ children }) => {
     loading,
     error,
     isAdminMode,
+    showAdminLogin,
 
     // Actions
     fetchPortfolioData,
@@ -431,6 +458,8 @@ const PortfolioProvider = ({ children }) => {
     deleteProject,
     addExperience,
     toggleAdminMode,
+    loginAsAdmin,
+    logoutAdmin,
     getTerminalCommands,
   };
 
