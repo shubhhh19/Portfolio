@@ -104,7 +104,10 @@ const MainLayout = () => {
         {/* Mac Menu Bar */}
         <MacMenuBar 
           currentSection={currentSection}
-          setCurrentSection={setCurrentSection}
+          onSectionChange={setCurrentSection}
+          onTerminalToggle={toggleTerminal}
+          isTerminalOpen={isTerminalOpen}
+          onWindowAction={handleWindowAction}
         />
 
         {/* Main Content Area */}
