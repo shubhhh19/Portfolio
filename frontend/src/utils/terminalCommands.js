@@ -152,12 +152,15 @@ export const processCommand = async (command, context) => {
 
     case 'sudo':
       if (args[0] === 'admin' || args[0] === 'su') {
-        toggleAdminMode();
+        // Always open the login modal when requesting admin, regardless of current mode
+        if (typeof context?.setShowAdminLogin === 'function') {
+          context.setShowAdminLogin(true);
+        } else {
+          toggleAdminMode();
+        }
         return {
           type: 'success',
-          content: isAdminMode 
-            ? 'Admin mode deactivated. Switched to guest mode.'
-            : 'Admin mode activated. You can now edit portfolio content.'
+          content: 'Requesting elevated permissions...'
         };
       }
       return {

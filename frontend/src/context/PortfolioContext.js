@@ -446,6 +446,7 @@ const PortfolioProvider = ({ children }) => {
     error,
     isAdminMode,
     showAdminLogin,
+    setShowAdminLogin,
 
     // Actions
     fetchPortfolioData,
