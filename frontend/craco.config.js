@@ -6,12 +6,10 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  // Force CRACO to read PostCSS plugins from postcss.config.js
   style: {
     postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
+      mode: 'file',
     },
   },
 };
