@@ -27,7 +27,8 @@ import QuickTerminalBar from '../Terminal/QuickTerminalBar';
 import { Terminal as TerminalIcon } from 'lucide-react';
 
 const MainLayout = () => {
-  const { currentSection, setCurrentSection, isAdminMode, showAdminLogin, setShowAdminLogin } = usePortfolio();
+  const { isAdminMode, showAdminLogin, setShowAdminLogin } = usePortfolio();
+  const [currentSection, setCurrentSection] = useState('dashboard');
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const funCommandsRef = useRef(null);
 
@@ -104,7 +105,7 @@ const MainLayout = () => {
         {/* Mac Menu Bar */}
         <MacMenuBar 
           currentSection={currentSection}
-          onSectionChange={setCurrentSection}
+          onSectionChange={handleSectionChange}
           onTerminalToggle={toggleTerminal}
           isTerminalOpen={isTerminalOpen}
           onWindowAction={handleWindowAction}
