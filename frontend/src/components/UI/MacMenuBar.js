@@ -6,7 +6,8 @@ const MacMenuBar = ({ currentSection, setCurrentSection }) => {
 
   // Base menu items that are always visible
   const baseMenu = [
-    { label: 'Home', section: 'home' },
+    { label: 'Dashboard', section: 'dashboard' },
+    { label: 'Home', section: 'hero' },
     { label: 'About', section: 'about' },
     { label: 'Skills', section: 'skills' },
     { label: 'Projects', section: 'projects' },
