@@ -101,13 +101,10 @@ const MainLayout = () => {
 
       {/* Main Container */}
       <div className="relative z-10 min-h-screen flex flex-col">
-        {/* macOS Menu Bar */}
-        <MacMenuBar
+        {/* Mac Menu Bar */}
+        <MacMenuBar 
           currentSection={currentSection}
-          onSectionChange={setCurrentSection}
-          onTerminalToggle={toggleTerminal}
-          isTerminalOpen={isTerminalOpen}
-          onWindowAction={handleWindowAction}
+          setCurrentSection={setCurrentSection}
         />
 
         {/* Main Content Area */}
