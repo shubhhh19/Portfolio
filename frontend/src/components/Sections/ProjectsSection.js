@@ -147,10 +147,12 @@ const ProjectsSection = () => {
             <span className="text-terminal-green">$</span> ls -la /projects/
           </div>
           <div className="text-terminal-dim text-sm">
-            total {projects.length} projects • {projects.filter(p => p.featured).length} featured • {projects.filter(p => p.github_url).length} with source code
+            {/* Project stats moved to dedicated section */}
           </div>
         </div>
       </GlassContainer>
+
+
 
       {/* Filter Tabs */}
       <GlassContainer variant="strong" className="p-6">
@@ -164,8 +166,8 @@ const ProjectsSection = () => {
               onClick={() => setFilter(filterOption.key)}
               className={`
                 px-4 py-2 rounded-lg font-mono text-sm transition-all duration-300 flex items-center space-x-2
-                ${filter === filterOption.key 
-                  ? 'bg-terminal-green bg-opacity-20 border border-terminal-green text-terminal-green shadow-glow-green' 
+                ${filter === filterOption.key
+                  ? 'bg-terminal-green bg-opacity-20 border border-terminal-green text-terminal-green shadow-glow-green'
                   : 'glass-card hover:bg-opacity-10 text-terminal-text hover:text-terminal-green'
                 }
               `}
@@ -192,29 +194,7 @@ const ProjectsSection = () => {
         </AnimatePresence>
       </div>
 
-      {/* Project Stats */}
-      <GlassContainer variant="card" className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div className="text-2xl font-bold text-terminal-green">{projects.length}</div>
-            <div className="text-sm text-terminal-dim">Total Projects</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-terminal-blue">{projects.filter(p => p.featured).length}</div>
-            <div className="text-sm text-terminal-dim">Featured</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-terminal-yellow">{projects.filter(p => p.github_url).length}</div>
-            <div className="text-sm text-terminal-dim">Open Source</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-terminal-purple">
-              {[...new Set(projects.flatMap(p => p.tech_stack || []))].length}
-            </div>
-            <div className="text-sm text-terminal-dim">Technologies Used</div>
-          </div>
-        </div>
-      </GlassContainer>
+
 
       {/* Project Detail Modal */}
       <AnimatePresence>

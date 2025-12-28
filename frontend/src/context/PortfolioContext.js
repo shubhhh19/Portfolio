@@ -20,7 +20,7 @@ const PortfolioProvider = ({ children }) => {
     about: null,
     contact: null,
   });
-  
+
   // Default skills used when backend is unavailable
   const defaultSkills = [
     // Languages
@@ -114,6 +114,16 @@ const PortfolioProvider = ({ children }) => {
 
   const [skills, setSkills] = useState(defaultSkills);
   const [projects, setProjects] = useState([
+    {
+      id: '10',
+      title: 'Memory Mesh',
+      description: 'Semantic Memory for AI Systems - Store, search, and manage conversational memories with vector embeddings.',
+      tech_stack: ['AI', 'Vector Embeddings', 'Semantic Search', 'React'],
+      github_url: null,
+      live_demo_url: 'https://memory-meshh.vercel.app/',
+      featured: true,
+      created_at: '2025-12-23'
+    },
     {
       id: '1',
       title: 'Handwritten Text Recognition',
@@ -252,7 +262,7 @@ const PortfolioProvider = ({ children }) => {
       // In a real app, you'd verify against backend
       // For now, we'll use a simple check
       const adminToken = process.env.REACT_APP_ADMIN_TOKEN || 'portfolio1919';
-      
+
       if (password === adminToken) {
         setIsAdminMode(true);
         localStorage.setItem('admin_mode', 'true');
@@ -289,7 +299,7 @@ const PortfolioProvider = ({ children }) => {
       // Fetch portfolio sections
       const sectionsResponse = await axios.get(`${API}/portfolio`);
       const sections = sectionsResponse.data;
-      
+
       const portfolioSections = {};
       sections.forEach(section => {
         portfolioSections[section.section_type] = section;
@@ -306,9 +316,15 @@ const PortfolioProvider = ({ children }) => {
       if (Array.isArray(skillsRes.data) && skillsRes.data.length > 0) {
         setSkills(skillsRes.data);
       } // else keep defaultSkills
-      setProjects(projectsRes.data);
-      setExperience(experienceRes.data);
-      
+
+      if (Array.isArray(projectsRes.data) && projectsRes.data.length > 0) {
+        setProjects(projectsRes.data);
+      }
+
+      if (Array.isArray(experienceRes.data) && experienceRes.data.length > 0) {
+        setExperience(experienceRes.data);
+      }
+
     } catch (err) {
       setError('Failed to fetch portfolio data');
       console.error('Portfolio fetch error:', err);
@@ -324,12 +340,12 @@ const PortfolioProvider = ({ children }) => {
         content,
         is_active: true
       });
-      
+
       setPortfolioData(prev => ({
         ...prev,
         [sectionType]: response.data
       }));
-      
+
       return { success: true, data: response.data };
     } catch (err) {
       console.error(`Error updating ${sectionType}:`, err);
@@ -352,7 +368,7 @@ const PortfolioProvider = ({ children }) => {
   const updateSkill = async (skillId, skillData) => {
     try {
       const response = await axios.put(`${API}/skills/${skillId}`, skillData);
-      setSkills(prev => prev.map(skill => 
+      setSkills(prev => prev.map(skill =>
         skill.id === skillId ? response.data : skill
       ));
       return { success: true, data: response.data };
@@ -388,7 +404,7 @@ const PortfolioProvider = ({ children }) => {
   const updateProject = async (projectId, projectData) => {
     try {
       const response = await axios.put(`${API}/projects/${projectId}`, projectData);
-      setProjects(prev => prev.map(project => 
+      setProjects(prev => prev.map(project =>
         project.id === projectId ? response.data : project
       ));
       return { success: true, data: response.data };
