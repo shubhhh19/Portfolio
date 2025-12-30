@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import PortfolioProvider from './context/PortfolioContext';
 import MainLayout from './components/Layout/MainLayout';
 import './App.css';
@@ -67,6 +68,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </PortfolioProvider>
+      <Analytics />
     </div>
   );
 }
